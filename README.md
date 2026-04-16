@@ -57,16 +57,6 @@ DELETE /api/orders/{id}
 
 ---
 
-## OrderDetail
-
-GET /api/orderdetails  
-GET /api/orderdetails/{id}  
-POST /api/orderdetails  
-PUT /api/orderdetails/{id}  
-DELETE /api/orderdetails/{id}  
-
----
-
 ## Product
 
 GET /api/products  
