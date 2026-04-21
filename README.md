@@ -1,5 +1,5 @@
 # Superstore
-This project shows a front end writen with React.JS, writen in C#, and SQL Stored Procedures 
+This project shows a front end writen with React.JS, writen in C#, and SQL Stored Procedures
 
 ---
 
@@ -51,9 +51,11 @@ DELETE /api/customers/{id}
 
 GET /api/orders  
 GET /api/orders/{id}  
+ GET /api/orders details
 POST /api/orders  
 PUT /api/orders/{id}  
 DELETE /api/orders/{id}  
+
 
 ---
 
