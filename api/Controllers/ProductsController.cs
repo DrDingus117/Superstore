@@ -2,7 +2,6 @@ using System.Data;
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 
 namespace api.Controllers;
 
@@ -50,6 +49,32 @@ public class ProductsController : ControllerBase
         {
             // Log the exception (not shown here)
             return StatusCode(500, $"An error occurred while processing your request for the product: {ex.Message}");
+        }
+    }
+
+   [HttpPost(Name = "CreateProduct")]
+    public async Task<IActionResult> Create([FromBody] Product product)
+    {
+        try
+        {
+            var parameters = new[]
+            {
+                new SqlParameter("@ProductName", product.ProductName),
+                new SqlParameter("@CategoryID", product.CategoryID),
+                new SqlParameter("@SubCategoryID", product.SubCategoryID),
+                new SqlParameter("@UnitPrice", product.UnitPrice),
+                new SqlParameter("@Quantity", product.Quantity)
+            };
+
+            // Use ExecuteAsync (returns affected rows) since IDatabaseService does not expose ExecuteScalarAsync
+            int rowsAffected = await _db.ExecuteAsync("CreateProduct", parameters);
+            // Created resource id is not available from ExecuteAsync; return generic 201 Created
+            return Created(string.Empty, null);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (not shown here)
+            return StatusCode(500, $"An error occurred while processing your request to create a product: {ex.Message}");
         }
     }
 
