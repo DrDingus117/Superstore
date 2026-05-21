@@ -2,6 +2,7 @@ using System.Data;
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace api.Controllers;
 
@@ -52,8 +53,8 @@ public class ProductsController : ControllerBase
         }
     }
 
-   [HttpPost(Name = "CreateProduct")]
-    public async Task<IActionResult> Create([FromBody] Product product)
+    [HttpPost(Name = "CreateProduct")]
+    public async Task<IActionResult> Post([FromBody] Product product)
     {
         try
         {
@@ -66,10 +67,8 @@ public class ProductsController : ControllerBase
                 new SqlParameter("@Quantity", product.Quantity)
             };
 
-            // Use ExecuteAsync (returns affected rows) since IDatabaseService does not expose ExecuteScalarAsync
-            int rowsAffected = await _db.ExecuteAsync("CreateProduct", parameters);
-            // Created resource id is not available from ExecuteAsync; return generic 201 Created
-            return Created(string.Empty, null);
+            int newProductId = await _db.ExecuteAsync("CreateProduct", parameters);
+            return Created();
         }
         catch (Exception ex)
         {

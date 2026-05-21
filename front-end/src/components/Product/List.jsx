@@ -23,6 +23,10 @@ export default function ProductList() {
     fetchProducts();
   }, []);
 
+const handleDelete = async (id) => {
+  console.log(`Delete product with ID: ${id}`);
+};
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (products.length === 0) return <div>No products found.</div>;
@@ -30,6 +34,9 @@ export default function ProductList() {
   return (
     <div>
       <h2>Products</h2>
+       <Link to={`/products/add`}>
+        <button>Add Product</button>
+      </Link>
       {products.length === 0 ? (
         <p>No products found.</p>
       ) : (
@@ -55,8 +62,10 @@ export default function ProductList() {
                 <td>{product.category}</td>
                 <td>{product.subCategory}</td>
                 <td>
+                  <Link to={`/products/edit/${product.productID}`}>
                   <button>Edit</button>
-                  <button>Delete</button>
+                  </Link>
+                  <button onClick={() => handleDelete(product.productID)}>Delete</button>
                 </td>
               </tr>
             ))}
