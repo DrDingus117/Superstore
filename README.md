@@ -56,6 +56,3 @@ This project consists of a Front-End written in React.JS, a back-end written in 
 
 ### SubCategory (Lookup Table)
 - **GET** /api/subcategories
-
-## UPDATE AS OF 5/15/26
-COALESCE and CASE are in UpdateProduct

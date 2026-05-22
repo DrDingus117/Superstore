@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		Marcus Pendleton	
+-- Author:		Milton Cruz	
 -- Create date: 5/8/2026
 -- Update date: 
 -- Description:	Get all Categories

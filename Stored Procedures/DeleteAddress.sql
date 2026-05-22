@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		Marcus Pendleton	
+-- Author:		Milton Cruz	
 -- Create date: 4/23/2026
 -- Update date: 
 -- Description:	Either going to Delete or Deactivate an address

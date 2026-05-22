@@ -23,9 +23,9 @@ export default function ProductList() {
     fetchProducts();
   }, []);
 
-const handleDelete = async (id) => {
-  console.log(`Delete product with ID: ${id}`);
-};
+  const handleDelete = async (productID) => {
+    console.log("Deleting product with ID:", productID);
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -34,7 +34,7 @@ const handleDelete = async (id) => {
   return (
     <div>
       <h2>Products</h2>
-       <Link to={`/products/add`}>
+      <Link to={`/products/add`}>
         <button>Add Product</button>
       </Link>
       {products.length === 0 ? (
@@ -62,10 +62,12 @@ const handleDelete = async (id) => {
                 <td>{product.category}</td>
                 <td>{product.subCategory}</td>
                 <td>
-                  <Link to={`/products/edit/${product.productID}`}>
-                  <button>Edit</button>
+                  <Link to={`/products/${product.productID}/edit`}>
+                    <button>Edit</button>
                   </Link>
-                  <button onClick={() => handleDelete(product.productID)}>Delete</button>
+                  <button onClick={() => handleDelete(product.productID)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

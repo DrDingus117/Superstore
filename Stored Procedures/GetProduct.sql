@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		Marcus Pendleton	
+-- Author:		Milton Cruz	
 -- Create date: 4/28/2026
 -- Update date: 5/7/2026
 -- Description:	Get a Product by ID
