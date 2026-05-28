@@ -9,13 +9,14 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 4/28/2026
--- Update date: 5/7/2026
--- Description: Get all Products
--- EXEC GetProducts
+-- Create date: 5/7/2026
+-- Description: Get Products By Category
+--
+-- EXEC GetProductsByCategory @CategoryID = 1
 -- =============================================
 
-ALTER PROCEDURE [dbo].[GetProducts]
+CREATE OR ALTER PROCEDURE [dbo].[GetProductsByCategory]
+    @CategoryID INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -37,7 +38,8 @@ BEGIN
             ON p.CategoryID = c.CategoryID
         INNER JOIN dbo.SubCategory AS sc
             ON p.SubCategoryID = sc.SubCategoryID
-        WHERE p.IsActive = 1;
+        WHERE p.CategoryID = @CategoryID
+            AND p.IsActive = 1;
 
     END TRY
 

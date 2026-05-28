@@ -6,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		Marcus Pendleton	
+-- Author:		Milton Cruz	
 -- Create date: 5/14/2026
 -- Update date: 5/21/2026
 -- Description:	Delete an Order

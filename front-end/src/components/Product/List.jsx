@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { read } from "../../api/fetch-wrapper";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const [deleteing, setDeleteing] = useState(false);
 
+  
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -24,9 +27,28 @@ export default function ProductList() {
   }, []);
 
   const handleDelete = async (productID) => {
-    console.log("Deleting product with ID:", productID);
+    const proceed = window.confirm("Are you sure you want to delete this product?");
+    if (!proceed) return;
+
+    const permanent = window.confirm(
+      "This action cannot be undone. Do you want to proceed? Click OK to permanently delete the product, or Cancel to abort."
+    );
+    if (!permanent) return;
   };
 
+ 
+ try {
+  setDeleteing(true);
+  const res = await del(`products/${productID}?permanent=${permanent}`)
+
+  if (res.ok) {
+    Navigate("/products");
+
+  }
+ } 
+)
+ 
+ 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (products.length === 0) return <div>No products found.</div>;
@@ -34,6 +56,11 @@ export default function ProductList() {
   return (
     <div>
       <h2>Products</h2>
+    
+    if (res.ok)
+     navigate("/products");
+    else
+     alert("Failed to delete the product. Please try again.");
       <Link to={`/products/add`}>
         <button>Add Product</button>
       </Link>

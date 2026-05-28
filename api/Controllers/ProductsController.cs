@@ -1,137 +1,140 @@
-using System.Data;
-using api.Services;
+using api.Data;
+using api.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 
-namespace api.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class ProductsController : ControllerBase
+namespace api.Controllers
 {
-    private readonly IDatabaseService _db;
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductsController : ControllerBase
+    {
+        private readonly ProductRepository _repository;
 
-    public ProductsController(IDatabaseService db)
-    {
-        _db = db;
-    }
-    
-    [HttpGet(Name = "GetAllProducts")]
-    public async Task<IActionResult> Get()
-    {
-        try
+        public ProductsController(ProductRepository repository)
         {
-            List<Dictionary<string, object?>> rows = await _db.QueryAsync("GetProducts");
-
-            List<Product> products = rows.Select(MapToProduct).ToList();
-            return Ok(products);
+            _repository = repository;
         }
-        catch (Exception ex)
+
+        // GET: api/products
+        [HttpGet]
+        public IActionResult GetProducts()
         {
-            // Log the exception (not shown here)
-            return StatusCode(500, $"An error occurred while processing your request for all products: {ex.Message}");
+            return Ok(_repository.GetProducts());
         }
-    }
 
-    [HttpGet("{id}", Name = "GetProductById")]
-    public async Task<IActionResult> Get(int id)
-    {
-        try
+        // GET: api/products/5
+        [HttpGet("{id}")]
+        public IActionResult GetProductById(int id)
         {
-            var row = await _db.QuerySingleAsync("GetProduct", new SqlParameter("@ProductID", id));
-            if (row == null)
-                return NotFound();
+            Product? product = _repository.GetProductById(id);
 
-            Product product = MapToProduct(row);
+            if (product == null)
+            {
+                return NotFound(new
+                {
+                    message = "Product not found"
+                });
+            }
+
             return Ok(product);
         }
-        catch (Exception ex)
-        {
-            // Log the exception (not shown here)
-            return StatusCode(500, $"An error occurred while processing your request for the product: {ex.Message}");
-        }
-    }
 
-    [HttpPost(Name = "CreateProduct")]
-    public async Task<IActionResult> Post([FromBody] Product product)
-    {
-        try
+        // POST: api/products
+        [HttpPost]
+        public IActionResult AddProduct(Product product)
         {
-            var parameters = new[]
+            if (!ModelState.IsValid)
             {
-                new SqlParameter("@ProductName", product.ProductName),
-                new SqlParameter("@CategoryID", product.CategoryID),
-                new SqlParameter("@SubCategoryID", product.SubCategoryID),
-                new SqlParameter("@UnitPrice", product.UnitPrice),
-                new SqlParameter("@Quantity", product.Quantity)
-            };
+                return BadRequest(ModelState);
+            }
 
-            int newProductId = await _db.ExecuteAsync("CreateProduct", parameters);
-            return Created();
-        }
-        catch (Exception ex)
-        {
-            // Log the exception (not shown here)
-            return StatusCode(500, $"An error occurred while processing your request to create a product: {ex.Message}");
-        }
-    }
-
-    [HttpPut("{id}", Name = "UpdateProduct")]
-    public async Task<IActionResult> Put(int id, [FromBody] Product product)
-    {
-        try
-        {
-            var parameters = new[]
+            try
             {
-                new SqlParameter("@ProductID", id),
-                new SqlParameter("@ProductName", product.ProductName),
-                new SqlParameter("@CategoryID", product.CategoryID),
-                new SqlParameter("@SubCategoryID", product.SubCategoryID),
-                new SqlParameter("@UnitPrice", product.UnitPrice),
-                new SqlParameter("@Quantity", product.Quantity)
-            };
+                _repository.AddProduct(product);
 
-            int newProductId = await _db.ExecuteAsync("UpdateProduct", parameters);
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            // Log the exception (not shown here)
-            return StatusCode(500, $"An error occurred while processing your request to update a product: {ex.Message}");
-        }
-    }
-
-    [HttpDelete("{id}", Name = "DeleteProduct")]
-    public async Task<IActionResult> Delete(int id, [FromQuery] bool permanent)
-    {
-        try
-        {
-            var parameters = new[]
+                // ✅ FIX: return created product instead of only message
+                return Ok(product);
+            }
+            catch (Exception ex)
             {
-                new SqlParameter("@ProductID", id),
-                new SqlParameter("@Delete", permanent)
-            };
-
-            await _db.ExecuteAsync("DeleteProduct", parameters);
-            return NoContent();
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
         }
-        catch (Exception ex)
+
+        // PUT: api/products/5
+        [HttpPut("{id}")]
+        public IActionResult UpdateProduct(int id, Product product)
         {
-            // Log the exception (not shown here)
-            return StatusCode(500, $"An error occurred while processing your request to delete a product: {ex.Message}");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Product? existingProduct =
+                _repository.GetProductById(id);
+
+            if (existingProduct == null)
+            {
+                return NotFound(new
+                {
+                    message = "Product not found"
+                });
+            }
+
+            product.ProductID = id;
+
+            try
+            {
+                _repository.UpdateProduct(product);
+
+                return Ok(new
+                {
+                    message = "Product updated successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
+        // DELETE: api/products/5
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProduct(int id)
+        {
+            Product? existingProduct =
+                _repository.GetProductById(id);
+
+            if (existingProduct == null)
+            {
+                return NotFound(new
+                {
+                    message = "Product not found"
+                });
+            }
+
+            try
+            {
+                _repository.DeleteProduct(id);
+
+                return Ok(new
+                {
+                    message = "Product deleted successfully"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
         }
     }
-
-    private static Product MapToProduct(Dictionary<string, object?> row) => new Product
-    {
-        ProductID = Convert.ToInt32(row["ProductID"]),
-        ProductName = Convert.ToString(row["ProductName"]) ?? string.Empty,
-        CategoryID = Convert.ToInt32(row["CategoryID"]),
-        SubCategoryID = Convert.ToInt32(row["SubCategoryID"]),
-        Category = Convert.ToString(row["Category"]) ?? string.Empty,
-        SubCategory = Convert.ToString(row["SubCategory"]) ?? string.Empty,
-        UnitPrice = Convert.ToDecimal(row["UnitPrice"]),
-        Quantity = Convert.ToInt32(row["Quantity"])
-    };
 }

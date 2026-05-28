@@ -1,33 +1,61 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router";
-import "./App.css";
-import AddressList from "./components/Address/List";
-import ProductList from "./components/Product/List";
-import ProductAdd from "./components/Product/Add";
-import ProductEdit from "./components/Product/Edit";
-import ProductDetail from "./components/Product/Detail";
+import {
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
-function App() {
+import ProductList from "./components/ProductList";
+import ProductForm from "./components/ProductForm";
+import ProductDetails from "./components/ProductDetails";
+
+export default function App() {
+
   return (
-    <BrowserRouter>
-      <div className="App">
-        <header className="App-header">
-          <nav>
-            <Link to="/products">Products</Link> |
-            <Link to="/addresses">Addresses</Link>
-          </nav>
-        </header>
-        <main>
-          <Routes>
-            <Route path="/products" element={<ProductList />} />
-            <Route path="/products/add" element={<ProductAdd />} />
-            <Route path="/products/:id/edit" element={<ProductEdit />} />
-            <Route path="/products/:id" element={<ProductDetail />} />
-            <Route path="/addresses" element={<AddressList />} />
-          </Routes> 
-        </main>
-      </div>
-    </BrowserRouter>
+
+    <div style={{ padding: "20px" }}>
+
+      <h1>Superstore Product Manager</h1>
+
+      <nav style={{ marginBottom: "15px" }}>
+
+        <Link to="/">
+          Home
+        </Link>
+
+        {" | "}
+
+        <Link to="/add">
+          Add Product
+        </Link>
+
+      </nav>
+
+      <hr />
+
+      <Routes>
+
+        <Route
+          path="/"
+          element={<ProductList />}
+        />
+
+        <Route
+          path="/add"
+          element={<ProductForm />}
+        />
+
+        <Route
+          path="/edit/:id"
+          element={<ProductForm />}
+        />
+
+        <Route
+          path="/products/:id"
+          element={<ProductDetails />}
+        />
+
+      </Routes>
+
+    </div>
   );
 }
-
-export default App;

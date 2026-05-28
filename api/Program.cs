@@ -1,35 +1,42 @@
-using api.Services;
+using api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-// Register IDatabaseService → SQLDatabaseService
-// Controllers ask for IDatabaseService; ASP.NET Core hands them a SQLDatabaseService.
-builder.Services.AddScoped<IDatabaseService, SQLDatabaseService>();
-
+// Controllers
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+// Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Repository
+builder.Services.AddScoped<ProductRepository>();
+
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins(
+            "http://localhost:3000",
+            "https://localhost:3000",
+            "http://localhost:5173",
+            "https://localhost:5173"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+// Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
 
-var allowedOrigins = 
-    builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? 
-    Array.Empty<string>();
+// CORS
+app.UseCors("AllowFrontend");
 
-app.UseCors(policy =>
-    policy.WithOrigins(allowedOrigins)
-          .AllowAnyHeader()
-          .AllowAnyMethod());
-
-          
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -1,6 +1,6 @@
 USE [Superstore]
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 5/5/2026 1:36:36 PM ******/
+/****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 5/26/2026 2:43:05 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -8,12 +8,12 @@ GO
 -- =============================================
 -- Author:		Milton Cruz	
 -- Create date: 4/28/2026
--- Update date: 5/5/2026
+-- Update date: 5/26/2026
 -- Description:	Either going to Delete or Deactivate a product
 -- EXEC DeleteProduct @ProductID = 1
 -- EXEC DeleteProduct @ProductID = 1, @Delete = 1
 -- =============================================
-ALTER PROCEDURE [dbo].[DeleteProduct]
+CREATE PROCEDURE [dbo].[DeleteProduct]
 	@ProductID INT,
 	@Delete BIT = 0
 AS
@@ -31,7 +31,7 @@ BEGIN
 		ELSE 
 			BEGIN
    				UPDATE dbo.Product
-				SET IsActive = 0, Quantity = 0
+				SET IsActive = 0, Inventory = 0
 				WHERE ProductID = @ProductID;
 			END
 	END TRY

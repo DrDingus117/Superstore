@@ -1,34 +1,70 @@
 USE [Superstore]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateProduct]    Script Date: 5/5/2026 1:40:41 PM ******/
+
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
--- Author:		Milton Cruz	
--- Create date: 4/28/2026
--- Update date: 5/5/2026
--- Description:	Create a Product
--- EXEC CreateProduct @ProductName = 'New Product', @CategoryID = 1, @SubCategoryID = 1, @UnitPrice = 0.00, @Quantity = 10
+-- Author:      Marcus Pendleton
+-- Create date: 5/7/2026
+-- Description: Create Product
+--
+-- EXEC CreateProduct
+--      @ProductName = 'Test Product',
+--      @CategoryID = 1,
+--      @SubCategoryID = 1,
+--      @UnitPrice = 9.99,
+--      @ProductKey = 'TP-100',
+--      @Inventory = 25
 -- =============================================
-ALTER PROCEDURE [dbo].[CreateProduct]
-	@ProductName NVARCHAR(150),
-	@CategoryID INT,
-	@SubCategoryID INT,
-    @UnitPrice DECIMAL(18,2), 
-	@Quantity INT
+
+CREATE OR ALTER PROCEDURE [dbo].[CreateProduct]
+    @ProductName NVARCHAR(100),
+    @CategoryID INT,
+    @SubCategoryID INT,
+    @UnitPrice DECIMAL(18,2),
+    @ProductKey NVARCHAR(50),
+    @Inventory INT
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
     BEGIN TRY
-   		INSERT INTO dbo.Product(ProductName, CategoryID, SubCategoryID, UnitPrice, Quantity)
-		VALUES(@ProductName, @CategoryID, @SubCategoryID, @UnitPrice, @Quantity);
-	END TRY
-	BEGIN CATCH
-   		SELECT ERROR_MESSAGE() AS ErrorMessage;
-	END CATCH;
+
+        INSERT INTO dbo.Product
+        (
+            ProductName,
+            CategoryID,
+            SubCategoryID,
+            UnitPrice,
+            ProductKey,
+            Inventory,
+            IsActive
+        )
+        VALUES
+        (
+            @ProductName,
+            @CategoryID,
+            @SubCategoryID,
+            @UnitPrice,
+            @ProductKey,
+            @Inventory,
+            1
+        );
+
+        SELECT
+            SCOPE_IDENTITY() AS NewProductID;
+
+    END TRY
+
+    BEGIN CATCH
+
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
+
+    END CATCH
 END
+GO
