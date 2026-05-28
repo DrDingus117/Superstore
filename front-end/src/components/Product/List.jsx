@@ -1,106 +1,143 @@
 import { useEffect, useState } from "react";
-import { read } from "../../api/fetch-wrapper";
-import { Link, useNavigate } from "react-router";
 
-export default function ProductList() {
+import {
+  get,
+  remove
+} from "../../api/fetch-wrapper.js";
+
+import {
+  Link
+} from "react-router-dom";
+
+export default function List() {
+
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-  const [deleteing, setDeleteing] = useState(false);
 
-  
+  async function loadProducts() {
+
+    try {
+
+      const data = await get("products");
+
+      console.log("API RESPONSE:", data);
+
+      const list = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.$values)
+        ? data.$values
+        : [];
+
+      setProducts(list);
+
+    } catch (err) {
+
+      console.error("Load failed:", err);
+
+      setProducts([]);
+
+    }
+  }
+
   useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      try {
-        const data = await read("products");
-        setProducts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
+    loadProducts();
   }, []);
 
-  const handleDelete = async (productID) => {
-    const proceed = window.confirm("Are you sure you want to delete this product?");
-    if (!proceed) return;
+  async function handleDelete(id) {
 
-    const permanent = window.confirm(
-      "This action cannot be undone. Do you want to proceed? Click OK to permanently delete the product, or Cancel to abort."
+    const confirmed = window.confirm(
+      "Delete this product?"
     );
-    if (!permanent) return;
-  };
 
- 
- try {
-  setDeleteing(true);
-  const res = await del(`products/${productID}?permanent=${permanent}`)
+    if (!confirmed) return;
 
-  if (res.ok) {
-    Navigate("/products");
+    try {
 
+      await remove("products", id);
+
+      loadProducts();
+
+    } catch (err) {
+
+      console.error("Delete failed:", err);
+
+      alert("Delete failed");
+
+    }
   }
- } 
-)
- 
- 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (products.length === 0) return <div>No products found.</div>;
 
   return (
     <div>
+
       <h2>Products</h2>
-    
-    if (res.ok)
-     navigate("/products");
-    else
-     alert("Failed to delete the product. Please try again.");
-      <Link to={`/products/add`}>
-        <button>Add Product</button>
-      </Link>
-      {products.length === 0 ? (
-        <p>No products found.</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Sub-Category</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product.productID}>
+
+      <Link to="/add">Add Product</Link>
+
+      <br /><br />
+
+      <table border="1" cellPadding="10">
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Inventory</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {products.length > 0 ? (
+
+            products.map((p) => (
+
+              <tr key={p.productID}>
+
+                <td>{p.productID}</td>
+
+                <td>{p.productName}</td>
+
+                <td>${Number(p.unitPrice).toFixed(2)}</td>
+
+                <td>{p.inventory}</td>
+
                 <td>
-                  <Link to={`/products/${product.productID}`}>
-                    {product.productName}
+
+                  <Link to={`/products/${p.productID}`}>
+                    View
                   </Link>
-                </td>
-                <td>${product.unitPrice.toFixed(2)}</td>
-                <td>{product.category}</td>
-                <td>{product.subCategory}</td>
-                <td>
-                  <Link to={`/products/${product.productID}/edit`}>
-                    <button>Edit</button>
+
+                  {" | "}
+
+                  <Link to={`/edit/${p.productID}`}>
+                    Edit
                   </Link>
-                  <button onClick={() => handleDelete(product.productID)}>
+
+                  {" | "}
+
+                  <button onClick={() => handleDelete(p.productID)}>
                     Delete
                   </button>
+
                 </td>
+
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+
+            ))
+
+          ) : (
+
+            <tr>
+              <td colSpan="5">No products found</td>
+            </tr>
+
+          )}
+
+        </tbody>
+
+      </table>
+
     </div>
   );
 }

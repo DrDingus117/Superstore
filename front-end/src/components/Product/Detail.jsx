@@ -1,74 +1,72 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router";
-import { read } from "../../api/fetch-wrapper";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-export default function ProductDetail() {
+import { getById } from "../../api/fetch-wrapper.js";
+
+export default function Detail() {
+
   const { id } = useParams();
+
   const [product, setProduct] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      setLoading(true);
-      try {
-        const data = await read(`products/${id}`);
-        setProduct(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchProduct();
+    async function load() {
+
+      try {
+
+        const data = await getById(
+          "products",
+          id
+        );
+
+        setProduct(data);
+
+      } catch (err) {
+
+        console.error(err);
+
+      }
+    }
+
+    load();
+
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!product) return <div>No product found.</div>;
+  if (!product) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
+
       <h2>Product Details</h2>
-      <Link to={`/products`}>
-        <button>Back to Products</button>
-      </Link>
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <strong>Name:</strong>
-            </td>
-            <td>{product.productName}</td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Price:</strong>
-            </td>
-            <td>${product.unitPrice.toFixed(2)}</td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Category:</strong>
-            </td>
-            <td>{product.category}</td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Sub-Category:</strong>
-            </td>
-            <td>{product.subCategory}</td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Quantity:</strong>
-            </td>
-            <td>{product.quantity}</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <p>
+        <b>ID:</b>{" "}
+        {product.productID}
+      </p>
+
+      <p>
+        <b>Name:</b>{" "}
+        {product.productName}
+      </p>
+
+      <p>
+        <b>Category:</b>{" "}
+        {product.category}
+      </p>
+
+      <p>
+        <b>Price:</b>{" "}
+        ${Number(product.unitPrice).toFixed(2)}
+      </p>
+
+      <p>
+        <b>Inventory:</b>{" "}
+        {product.inventory}
+      </p>
+
     </div>
   );
 }

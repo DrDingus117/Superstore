@@ -4,9 +4,10 @@ import {
   Link
 } from "react-router-dom";
 
-import ProductList from "./components/ProductList";
-import ProductForm from "./components/ProductForm";
-import ProductDetails from "./components/ProductDetails";
+import List from "./components/Product/List";
+import Add from "./components/Product/Add";
+import Edit from "./components/Product/Edit";
+import Detail from "./components/Product/Detail";
 
 export default function App() {
 
@@ -36,22 +37,22 @@ export default function App() {
 
         <Route
           path="/"
-          element={<ProductList />}
+          element={<List />}
         />
 
         <Route
           path="/add"
-          element={<ProductForm />}
+          element={<Add />}
         />
 
         <Route
-          path="/edit/:id"
-          element={<ProductForm />}
-        />
+           path="/edit/:id"
+           element={<Edit />}
+/>
 
         <Route
           path="/products/:id"
-          element={<ProductDetails />}
+          element={<Detail />}
         />
 
       </Routes>

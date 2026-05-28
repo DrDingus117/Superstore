@@ -1,76 +1,189 @@
 import { useEffect, useState } from "react";
-import { read } from "../../api/fetch-wrapper";
 
-const emptyForm = {
-  productName: "",
-  categoryID: "",
-  subCategoryID: "",
-  unitPrice: "",
-  quantity: "",
-};
+import {
+  create,
+  getById,
+  update
+} from "../../api/fetch-wrapper.js";
 
-export default function ProductForm({ initialValues = emptyForm }) {
-  const [form, setForm] = useState(initialValues);
-  const [error, setError] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [subCategories, setSubCategories] = useState([]);
+import {
+  useNavigate,
+  useParams
+} from "react-router-dom";
 
+export default function Form() {
+
+  const { id } = useParams();
+  const isEdit = Boolean(id);
+  const navigate = useNavigate();
+
+  const [saving, setSaving] = useState(false);
+
+  const [form, setForm] = useState({
+    productName: "",
+    categoryID: "",
+    subCategoryID: "",
+    unitPrice: "",
+    inventory: "",
+    productKey: ""
+  });
+
+  // LOAD PRODUCT (EDIT MODE)
   useEffect(() => {
-    console.log("Fetching categories and subcategories...");
-    const fetchCategories = async () => {
+
+    if (!isEdit) return;
+
+    async function load() {
+
       try {
-        const data = await read("categories");
-        console.log("Fetched categories:", data);
-        setCategories(data);
+
+        const data = await getById("products", id);
+
+        setForm({
+          productName: data.productName || "",
+          categoryID: data.categoryID || "",
+          subCategoryID: data.subCategoryID || "",
+          unitPrice: data.unitPrice || "",
+          inventory: data.inventory || "",
+          productKey: data.productKey || ""
+        });
+
       } catch (err) {
-        setError(err.message);
+        console.error("Load failed:", err);
       }
+
+    }
+
+    load();
+
+  }, [id, isEdit]);
+
+  function handleChange(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (saving) return;
+    setSaving(true);
+
+    const payload = {
+      ProductName: form.productName,
+      CategoryID: Number(form.categoryID),
+      SubCategoryID: Number(form.subCategoryID),
+      UnitPrice: Number(form.unitPrice),
+      Inventory: Number(form.inventory),
+      ProductKey: form.productKey
     };
 
-    const fetchSubCategories = async () => {
-      try {
-        const data = await read("subcategories");
-        console.log("Fetched subcategories:", data);
-        setSubCategories(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
+    try {
 
-    fetchCategories();
-    fetchSubCategories();
-  }, []);
+      if (isEdit) {
+        await update("products", id, payload);
+      } else {
+        await create("products", payload);
+      }
+
+      alert(
+        isEdit
+          ? "Product updated successfully!"
+          : "Product created successfully!"
+      );
+
+      navigate("/");
+
+    } catch (err) {
+
+      console.error("Save failed:", err);
+      alert("Save failed — check console");
+
+    } finally {
+      setSaving(false);
+    }
+  }
 
   return (
-    <form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <div>
-        <label for="categoryID">Category</label>
-        <select name="categoryID" value={form.categoryID} required>
-          <option value="">Select a category</option>
-          {categories.map((category) => (
-            <option key={category.categoryID} value={category.categoryID}>
-              {category.categoryName}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div>
 
-      <div>
-        <label for="subCategoryID">Subcategory</label>
-        <select name="subCategoryID" value={form.subCategoryID} required>
-          <option value="">Select a subcategory</option>
-          {subCategories.map((subCategory) => (
-            <option
-              key={subCategory.subCategoryID}
-              value={subCategory.subCategoryID}
-            >
-              {subCategory.subCategoryName}
-            </option>
-          ))}
-        </select>
-      </div>
-    </form>
+      <h2>
+        {isEdit ? "Edit Product" : "Add Product"}
+      </h2>
+
+      <form onSubmit={handleSubmit}>
+
+        <input
+          name="productName"
+          placeholder="Product Name"
+          value={form.productName}
+          onChange={handleChange}
+        />
+
+        <br /><br />
+
+        <input
+          type="number"
+          name="categoryID"
+          placeholder="Category ID"
+          value={form.categoryID}
+          onChange={handleChange}
+        />
+
+        <br /><br />
+
+        <input
+          type="number"
+          name="subCategoryID"
+          placeholder="SubCategory ID"
+          value={form.subCategoryID}
+          onChange={handleChange}
+        />
+
+        <br /><br />
+
+        <input
+          type="number"
+          step="0.01"
+          name="unitPrice"
+          placeholder="Unit Price"
+          value={form.unitPrice}
+          onChange={handleChange}
+        />
+
+        <br /><br />
+
+        <input
+          type="number"
+          name="inventory"
+          placeholder="Inventory"
+          value={form.inventory}
+          onChange={handleChange}
+        />
+
+        <br /><br />
+
+        <input
+          name="productKey"
+          placeholder="Product Key"
+          value={form.productKey}
+          onChange={handleChange}
+        />
+
+        <br /><br />
+
+        <button type="submit" disabled={saving}>
+          {saving
+            ? "Saving..."
+            : isEdit
+            ? "Update"
+            : "Create"}
+        </button>
+
+      </form>
+
+    </div>
   );
 }
