@@ -52,8 +52,11 @@ namespace api.Controllers
             {
                 _repository.AddProduct(product);
 
-                // ✅ FIX: return created product instead of only message
-                return Ok(product);
+                return CreatedAtAction(
+                    nameof(GetProductById),
+                    new { id = product.ProductID },
+                    product
+                );
             }
             catch (Exception ex)
             {

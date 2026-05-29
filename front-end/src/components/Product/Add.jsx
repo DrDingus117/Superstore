@@ -37,8 +37,6 @@ export default function Add() {
   return (
     <div>
 
-      <h2>Add Product</h2>
-
       <Form
         onSubmit={handleSubmit}
         buttonText="Create"

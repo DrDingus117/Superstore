@@ -18,6 +18,7 @@ export default function Edit() {
   const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
 
@@ -31,19 +32,19 @@ export default function Edit() {
         );
 
         setProduct({
-
           productName: data.productName,
           categoryID: data.categoryID,
           subCategoryID: data.subCategoryID,
           unitPrice: data.unitPrice,
           inventory: data.inventory,
           productKey: data.productKey
-
         });
 
       } catch (err) {
 
         console.error(err);
+
+        setError("Product not found.");
 
       }
     }
@@ -75,14 +76,16 @@ export default function Edit() {
     }
   }
 
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   if (!product) {
     return <p>Loading...</p>;
   }
 
   return (
     <div>
-
-      <h2>Edit Product</h2>
 
       <Form
         initialValues={product}

@@ -115,62 +115,72 @@ export default function Form() {
 
       <form onSubmit={handleSubmit}>
 
-        <input
-          name="productName"
-          placeholder="Product Name"
-          value={form.productName}
-          onChange={handleChange}
+      <input
+        name="productName"
+       placeholder="Product Name"
+      value={form.productName}
+        onChange={handleChange}
+       required
+       />
+
+        <br /><br />
+
+       <input
+        type="number"
+        name="categoryID"
+        placeholder="Category ID"
+        value={form.categoryID}
+        onChange={handleChange}
+        required
+        min="1"
         />
 
         <br /><br />
 
         <input
-          type="number"
-          name="categoryID"
-          placeholder="Category ID"
-          value={form.categoryID}
-          onChange={handleChange}
+         type="number"
+         name="subCategoryID"
+         placeholder="SubCategory ID"
+         value={form.subCategoryID}
+         onChange={handleChange}
+         required
+         min="1"
         />
 
         <br /><br />
 
         <input
-          type="number"
-          name="subCategoryID"
-          placeholder="SubCategory ID"
-          value={form.subCategoryID}
-          onChange={handleChange}
-        />
+        type="number"
+         step="0.01"
+         min="0"
+        name="unitPrice"
+        placeholder="Unit Price"
+        value={form.unitPrice}
+        onChange={handleChange}
+        required
+      />
 
         <br /><br />
 
         <input
-          type="number"
-          step="0.01"
-          name="unitPrice"
-          placeholder="Unit Price"
-          value={form.unitPrice}
-          onChange={handleChange}
-        />
+        type="number"
+        min="0"
+        name="inventory"
+        placeholder="Inventory"
+        value={form.inventory}
+        onChange={handleChange}
+        required
+       />
 
         <br /><br />
 
         <input
-          type="number"
-          name="inventory"
-          placeholder="Inventory"
-          value={form.inventory}
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          name="productKey"
-          placeholder="Product Key"
-          value={form.productKey}
-          onChange={handleChange}
-        />
+        name="productKey"
+        placeholder="Product Key"
+        value={form.productKey}
+        onChange={handleChange}
+        required
+       />
 
         <br /><br />
 
