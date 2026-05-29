@@ -10,11 +10,11 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Get all Categories
--- EXEC dbo.GetCategories
+-- Description: Get all Segments
+-- EXEC dbo.GetSegments
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCategories
+CREATE OR ALTER PROCEDURE dbo.GetSegments
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -22,10 +22,10 @@ BEGIN
     BEGIN TRY
 
         SELECT
-            CategoryID,
-            Category
-        FROM dbo.Category
-        ORDER BY Category;
+            SegmentID,
+            Segment
+        FROM dbo.Segment
+        ORDER BY Segment;
 
     END TRY
 

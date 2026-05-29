@@ -10,12 +10,11 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Get Order Details By Order ID
--- EXEC dbo.GetOrderDetails 1
+-- Description: Get all Orders
+-- EXEC dbo.GetOrders
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetOrderDetails
-    @OrderID INT
+CREATE OR ALTER PROCEDURE dbo.GetOrders
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -24,11 +23,21 @@ BEGIN
 
         SELECT
             OrderID,
-            ProductID,
+            OrderDate,
+            CustomerID,
+            SalesPrice,
+            Quantity,
+            Discount,
+            Profit,
+            ShipModeID,
+            ShipDate,
             OrderKey,
-            ProductKey
-        FROM dbo.OrderDetail
-        WHERE OrderID = @OrderID;
+            CustomerKey,
+            IsActive,
+            DateCreated,
+            DateUpdated
+        FROM dbo.[Order]
+        ORDER BY OrderDate DESC;
 
     END TRY
 

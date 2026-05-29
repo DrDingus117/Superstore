@@ -1,41 +1,41 @@
 USE [Superstore]
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 5/26/2026 2:43:05 PM ******/
+/****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 5/29/2026 2:35:33 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
--- Author:		Milton Cruz	
--- Create date: 4/28/2026
--- Update date: 5/26/2026
--- Description:	Either going to Delete or Deactivate a product
+-- Author:      Marcus Pendleton
+-- Create date: 5/7/2026
+-- Description: Delete Product
+--
 -- EXEC DeleteProduct @ProductID = 1
--- EXEC DeleteProduct @ProductID = 1, @Delete = 1
 -- =============================================
-CREATE PROCEDURE [dbo].[DeleteProduct]
-	@ProductID INT,
-	@Delete BIT = 0
+
+ALTER   PROCEDURE [dbo].[DeleteProduct]
+    @ProductID INT
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
+    SET NOCOUNT ON;
 
     BEGIN TRY
-		IF @Delete = 1
-			BEGIN
-				DELETE FROM dbo.Product
-				WHERE ProductID = @ProductID;
-			END
-		ELSE 
-			BEGIN
-   				UPDATE dbo.Product
-				SET IsActive = 0, Inventory = 0
-				WHERE ProductID = @ProductID;
-			END
-	END TRY
-	BEGIN CATCH
-   		SELECT ERROR_MESSAGE() AS ErrorMessage;
-	END CATCH;
+
+        UPDATE dbo.Product
+        SET
+            IsActive = 0
+        WHERE ProductID = @ProductID;
+
+        SELECT
+            'Product Deleted Successfully' AS Message;
+
+    END TRY
+
+    BEGIN CATCH
+
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
+
+    END CATCH
 END

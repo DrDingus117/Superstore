@@ -10,11 +10,10 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Update Customer
+-- Description: Add Customer
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.UpdateCustomer
-    @CustomerID INT,
+CREATE OR ALTER PROCEDURE dbo.AddCustomer
     @FirstName NVARCHAR(50),
     @LastName NVARCHAR(50),
     @SegmentID INT,
@@ -26,15 +25,26 @@ BEGIN
 
     BEGIN TRY
 
-        UPDATE dbo.Customer
-        SET
-            FirstName = @FirstName,
-            LastName = @LastName,
-            SegmentID = @SegmentID,
-            CustomerKey = @CustomerKey,
-            IsActive = @IsActive,
-            DateUpdated = GETDATE()
-        WHERE CustomerID = @CustomerID;
+        INSERT INTO dbo.Customer
+        (
+            FirstName,
+            LastName,
+            SegmentID,
+            CustomerKey,
+            IsActive,
+            DateCreated,
+            DateUpdated
+        )
+        VALUES
+        (
+            @FirstName,
+            @LastName,
+            @SegmentID,
+            @CustomerKey,
+            @IsActive,
+            GETDATE(),
+            GETDATE()
+        );
 
     END TRY
 

@@ -10,11 +10,11 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Get all Categories
--- EXEC dbo.GetCategories
+-- Description: Get all Ship Modes
+-- EXEC dbo.GetShipModes
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCategories
+CREATE OR ALTER PROCEDURE dbo.GetShipModes
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -22,10 +22,10 @@ BEGIN
     BEGIN TRY
 
         SELECT
-            CategoryID,
-            Category
-        FROM dbo.Category
-        ORDER BY Category;
+            ShipModeID,
+            ShipMode
+        FROM dbo.ShipMode
+        ORDER BY ShipMode;
 
     END TRY
 

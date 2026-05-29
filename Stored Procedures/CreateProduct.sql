@@ -1,9 +1,8 @@
 USE [Superstore]
 GO
-
+/****** Object:  StoredProcedure [dbo].[CreateProduct]    Script Date: 5/29/2026 2:35:15 PM ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
@@ -21,7 +20,7 @@ GO
 --      @Inventory = 25
 -- =============================================
 
-CREATE OR ALTER PROCEDURE [dbo].[CreateProduct]
+ALTER PROCEDURE [dbo].[CreateProduct]
     @ProductName NVARCHAR(100),
     @CategoryID INT,
     @SubCategoryID INT,
@@ -67,4 +66,3 @@ BEGIN
 
     END CATCH
 END
-GO

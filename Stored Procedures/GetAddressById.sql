@@ -10,11 +10,11 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Delete Address
--- EXEC dbo.DeleteAddress 1
+-- Description: Get Address By ID
+-- EXEC dbo.GetAddressById 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.DeleteAddress
+CREATE OR ALTER PROCEDURE dbo.GetAddressById
     @AddressID INT
 AS
 BEGIN
@@ -22,7 +22,21 @@ BEGIN
 
     BEGIN TRY
 
-        DELETE
+        SELECT
+            AddressID,
+            AddressLine1,
+            AddressLine2,
+            City,
+            StateID,
+            CountryID,
+            PostalCode,
+            RegionID,
+            AddressTypeID,
+            CustomerID,
+            CustomerKey,
+            IsActive,
+            DateCreated,
+            DateUpdated
         FROM dbo.Address
         WHERE AddressID = @AddressID;
 

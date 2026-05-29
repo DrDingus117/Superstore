@@ -1,9 +1,8 @@
 USE [Superstore]
 GO
-
+/****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 5/29/2026 2:35:48 PM ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
@@ -58,4 +57,3 @@ BEGIN
 
     END CATCH
 END
-GO

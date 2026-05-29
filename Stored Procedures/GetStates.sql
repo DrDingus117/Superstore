@@ -10,11 +10,11 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Get all Categories
--- EXEC dbo.GetCategories
+-- Description: Get all States
+-- EXEC dbo.GetStates
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCategories
+CREATE OR ALTER PROCEDURE dbo.GetStates
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -22,10 +22,10 @@ BEGIN
     BEGIN TRY
 
         SELECT
-            CategoryID,
-            Category
-        FROM dbo.Category
-        ORDER BY Category;
+            StateID,
+            State
+        FROM dbo.State
+        ORDER BY State;
 
     END TRY
 

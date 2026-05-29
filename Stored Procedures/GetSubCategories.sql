@@ -1,4 +1,3 @@
-USE [Superstore]
 GO
 
 SET ANSI_NULLS ON
@@ -10,11 +9,11 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Get all SubCategories
--- EXEC GetSubCategories
+-- Description: Get all Sub Categories
+-- EXEC dbo.GetSubCategories
 -- =============================================
 
-CREATE OR ALTER PROCEDURE [dbo].[GetSubCategories]
+CREATE OR ALTER PROCEDURE dbo.GetSubCategories
 AS
 BEGIN
     SET NOCOUNT ON;

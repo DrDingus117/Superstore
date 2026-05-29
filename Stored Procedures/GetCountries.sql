@@ -10,11 +10,11 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Get all Categories
--- EXEC dbo.GetCategories
+-- Description: Get all Countries
+-- EXEC dbo.GetCountries
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCategories
+CREATE OR ALTER PROCEDURE dbo.GetCountries
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -22,10 +22,10 @@ BEGIN
     BEGIN TRY
 
         SELECT
-            CategoryID,
-            Category
-        FROM dbo.Category
-        ORDER BY Category;
+            CountryID,
+            Country
+        FROM dbo.Country
+        ORDER BY Country;
 
     END TRY
 

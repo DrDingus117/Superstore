@@ -1,9 +1,8 @@
 USE [Superstore]
 GO
-
+/****** Object:  StoredProcedure [dbo].[GetProducts]    Script Date: 5/29/2026 2:34:48 PM ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
@@ -37,7 +36,8 @@ BEGIN
             ON p.CategoryID = c.CategoryID
         INNER JOIN dbo.SubCategory AS sc
             ON p.SubCategoryID = sc.SubCategoryID
-        WHERE p.IsActive = 1;
+        WHERE p.IsActive = 1
+        ORDER BY p.ProductID DESC;
 
     END TRY
 
@@ -48,4 +48,3 @@ BEGIN
 
     END CATCH
 END
-GO

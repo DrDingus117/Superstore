@@ -1,9 +1,8 @@
 USE [Superstore]
 GO
-
+/****** Object:  StoredProcedure [dbo].[GetProductById]    Script Date: 5/29/2026 2:35:05 PM ******/
 SET ANSI_NULLS ON
 GO
-
 SET QUOTED_IDENTIFIER ON
 GO
 
@@ -14,7 +13,7 @@ GO
 -- EXEC GetProductById @ProductID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE [dbo].[GetProductById]
+ALTER   PROCEDURE [dbo].[GetProductById]
     @ProductID INT
 AS
 BEGIN
@@ -49,4 +48,3 @@ BEGIN
 
     END CATCH
 END
-GO

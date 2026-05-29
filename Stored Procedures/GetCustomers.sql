@@ -10,11 +10,11 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
--- Description: Get all Categories
--- EXEC dbo.GetCategories
+-- Description: Get all Customers
+-- EXEC dbo.GetCustomers
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCategories
+CREATE OR ALTER PROCEDURE dbo.GetCustomers
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -22,10 +22,16 @@ BEGIN
     BEGIN TRY
 
         SELECT
-            CategoryID,
-            Category
-        FROM dbo.Category
-        ORDER BY Category;
+            CustomerID,
+            FirstName,
+            LastName,
+            SegmentID,
+            CustomerKey,
+            IsActive,
+            DateCreated,
+            DateUpdated
+        FROM dbo.Customer
+        ORDER BY LastName, FirstName;
 
     END TRY
 
