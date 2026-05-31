@@ -9,7 +9,7 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/31/2026
+-- Create date: 5/28/2026
 -- Update date: 5/31/2026
 -- Description: Get Address Types
 --
