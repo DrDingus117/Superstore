@@ -9,9 +9,10 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/28/2026
+-- Update date: 5/30/2026
 -- Description: Get Customer By ID
--- EXEC dbo.GetCustomerById 1
+-- EXEC GetCustomerById @CustomerID = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.GetCustomerById
@@ -32,7 +33,8 @@ BEGIN
             DateCreated,
             DateUpdated
         FROM dbo.Customer
-        WHERE CustomerID = @CustomerID;
+        WHERE CustomerID = @CustomerID
+            AND IsActive = 1;
 
     END TRY
 

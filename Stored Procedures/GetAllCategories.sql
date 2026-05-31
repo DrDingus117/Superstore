@@ -6,9 +6,9 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		Milton Cruz	
--- Create date: 5/8/2026
--- Update date: 
+-- Author:		Marcus Pendleton
+-- Create date: 5/21/2026
+-- Update date: 5/30/2026
 -- Description:	Get all Categories
 -- EXEC GetAllCategories
 -- =============================================

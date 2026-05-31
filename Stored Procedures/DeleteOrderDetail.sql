@@ -5,9 +5,9 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		Milton Cruz	
+-- Author:		Marcus Pendleton
 -- Create date: 5/14/2026
--- Update date: 
+-- Update date: 5/30/2026
 -- Description:	Delete the history of the product purchased
 -- EXEC DeleteOrderDetail @OrderID = 1
 -- =============================================

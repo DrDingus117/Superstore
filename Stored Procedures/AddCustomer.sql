@@ -9,8 +9,16 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/28/2026
+-- Update date: 5/30/2026
 -- Description: Add Customer
+--
+-- EXEC AddCustomer
+--      @FirstName = 'John',
+--      @LastName = 'Smith',
+--      @SegmentID = 1,
+--      @CustomerKey = 'JS-100',
+--      @IsActive = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.AddCustomer
@@ -46,11 +54,15 @@ BEGIN
             GETDATE()
         );
 
+        SELECT
+            SCOPE_IDENTITY() AS NewCustomerID;
+
     END TRY
 
     BEGIN CATCH
 
-        SELECT ERROR_MESSAGE() AS ErrorMessage;
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
 
     END CATCH
 END

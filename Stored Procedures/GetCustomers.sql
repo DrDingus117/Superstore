@@ -1,18 +1,20 @@
-USE [Superstore]
-GO
+USE [Superstore] 
+GO 
 
-SET ANSI_NULLS ON
-GO
+SET ANSI_NULLS ON 
+GO 
 
-SET QUOTED_IDENTIFIER ON
-GO
+SET QUOTED_IDENTIFIER ON 
+GO 
 
+-- ============================================= 
+-- Author: Marcus Pendleton 
+-- Create date: 5/28/2026 
+-- Update date: 5/30/2026 
+-- Description: Get all Customers 
+-- EXEC dbo.GetCustomers 
 -- =============================================
--- Author:      Marcus Pendleton
--- Create date: 5/7/2026
--- Description: Get all Customers
--- EXEC dbo.GetCustomers
--- =============================================
+
 
 CREATE OR ALTER PROCEDURE dbo.GetCustomers
 AS
@@ -31,6 +33,7 @@ BEGIN
             DateCreated,
             DateUpdated
         FROM dbo.Customer
+        WHERE IsActive = 1
         ORDER BY LastName, FirstName;
 
     END TRY

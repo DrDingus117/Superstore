@@ -1,20 +1,22 @@
 USE [Superstore]
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 5/29/2026 2:35:33 PM ******/
+
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 4/28/2026
+-- Update date: 5/30/2026
 -- Description: Delete Product
 --
 -- EXEC DeleteProduct @ProductID = 1
 -- =============================================
 
-ALTER   PROCEDURE [dbo].[DeleteProduct]
+CREATE OR ALTER PROCEDURE [dbo].[DeleteProduct]
     @ProductID INT
 AS
 BEGIN
@@ -22,13 +24,22 @@ BEGIN
 
     BEGIN TRY
 
-        UPDATE dbo.Product
+        UPDATE p
         SET
-            IsActive = 0
-        WHERE ProductID = @ProductID;
+            p.IsActive = 0
+        FROM dbo.Product AS p
+        WHERE p.ProductID = @ProductID;
 
-        SELECT
-            'Product Deleted Successfully' AS Message;
+        IF @@ROWCOUNT > 0
+        BEGIN
+            SELECT
+                'Product Deleted Successfully' AS Message;
+        END
+        ELSE
+        BEGIN
+            SELECT
+                'Product Not Found' AS Message;
+        END
 
     END TRY
 
@@ -39,3 +50,4 @@ BEGIN
 
     END CATCH
 END
+GO

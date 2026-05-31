@@ -19,21 +19,18 @@ namespace api.Data
         {
             List<Product> products = new();
 
-            using SqlConnection conn =
-                new SqlConnection(_connectionString);
-
-            using SqlCommand cmd =
-                new SqlCommand("GetProducts", conn);
+            using SqlConnection conn = new(_connectionString);
+            using SqlCommand cmd = new("GetProducts", conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
 
             conn.Open();
 
-            SqlDataReader reader = cmd.ExecuteReader();
+            using SqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                Product product = new Product
+                products.Add(new Product
                 {
                     ProductID = Convert.ToInt32(reader["ProductID"]),
                     ProductName = reader["ProductName"].ToString()!,
@@ -44,32 +41,26 @@ namespace api.Data
                     UnitPrice = Convert.ToDecimal(reader["UnitPrice"]),
                     ProductKey = reader["ProductKey"].ToString()!,
                     Inventory = Convert.ToInt32(reader["Inventory"])
-                };
-
-                products.Add(product);
+                });
             }
 
             return products;
         }
 
-        // GET PRODUCT BY ID
+        // GET BY ID
         public Product? GetProductById(int id)
         {
             Product? product = null;
 
-            using SqlConnection conn =
-                new SqlConnection(_connectionString);
-
-            using SqlCommand cmd =
-                new SqlCommand("GetProductById", conn);
+            using SqlConnection conn = new(_connectionString);
+            using SqlCommand cmd = new("GetProductById", conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.AddWithValue("@ProductID", id);
 
             conn.Open();
 
-            SqlDataReader reader = cmd.ExecuteReader();
+            using SqlDataReader reader = cmd.ExecuteReader();
 
             if (reader.Read())
             {
@@ -90,14 +81,11 @@ namespace api.Data
             return product;
         }
 
-        // ADD PRODUCT
-        public void AddProduct(Product product)
+        // ADD PRODUCT (FIXED - RETURNS NEW ID)
+        public int AddProduct(Product product)
         {
-            using SqlConnection conn =
-                new SqlConnection(_connectionString);
-
-            using SqlCommand cmd =
-                new SqlCommand("CreateProduct", conn);
+            using SqlConnection conn = new(_connectionString);
+            using SqlCommand cmd = new("CreateProduct", conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -110,17 +98,17 @@ namespace api.Data
 
             conn.Open();
 
-            cmd.ExecuteNonQuery();
+            // Stored procedure returns SCOPE_IDENTITY()
+            object result = cmd.ExecuteScalar();
+
+            return Convert.ToInt32(result);
         }
 
         // UPDATE PRODUCT
         public bool UpdateProduct(Product product)
         {
-            using SqlConnection conn =
-                new SqlConnection(_connectionString);
-
-            using SqlCommand cmd =
-                new SqlCommand("UpdateProduct", conn);
+            using SqlConnection conn = new(_connectionString);
+            using SqlCommand cmd = new("UpdateProduct", conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
 
@@ -134,29 +122,21 @@ namespace api.Data
 
             conn.Open();
 
-            int rowsAffected = cmd.ExecuteNonQuery();
-
-            return rowsAffected > 0;
+            return cmd.ExecuteNonQuery() > 0;
         }
 
         // DELETE PRODUCT
         public bool DeleteProduct(int id)
         {
-            using SqlConnection conn =
-                new SqlConnection(_connectionString);
-
-            using SqlCommand cmd =
-                new SqlCommand("DeleteProduct", conn);
+            using SqlConnection conn = new(_connectionString);
+            using SqlCommand cmd = new("DeleteProduct", conn);
 
             cmd.CommandType = CommandType.StoredProcedure;
-
             cmd.Parameters.AddWithValue("@ProductID", id);
 
             conn.Open();
 
-            int rowsAffected = cmd.ExecuteNonQuery();
-
-            return rowsAffected > 0;
+            return cmd.ExecuteNonQuery() > 0;
         }
     }
 }

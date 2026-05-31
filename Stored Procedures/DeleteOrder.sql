@@ -9,9 +9,11 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/14/2026
+-- Update date: 5/30/2026
 -- Description: Delete Order
--- EXEC dbo.DeleteOrder 1
+--
+-- EXEC DeleteOrder @OrderID = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.DeleteOrder
@@ -22,15 +24,21 @@ BEGIN
 
     BEGIN TRY
 
-        DELETE
-        FROM dbo.[Order]
+        UPDATE dbo.[Order]
+        SET
+            IsActive = 0,
+            DateUpdated = GETDATE()
         WHERE OrderID = @OrderID;
+
+        SELECT
+            'Order Deleted Successfully' AS Message;
 
     END TRY
 
     BEGIN CATCH
 
-        SELECT ERROR_MESSAGE() AS ErrorMessage;
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
 
     END CATCH
 END

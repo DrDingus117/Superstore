@@ -9,9 +9,11 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/28/2026
+-- Update date: 5/30/2026
 -- Description: Get Orders for a Customer
--- EXEC dbo.GetCustomerOrders 1
+--
+-- EXEC GetCustomerOrders @CustomerID = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.GetCustomerOrders
@@ -39,6 +41,7 @@ BEGIN
             DateUpdated
         FROM dbo.[Order]
         WHERE CustomerID = @CustomerID
+            AND IsActive = 1
         ORDER BY OrderDate DESC;
 
     END TRY

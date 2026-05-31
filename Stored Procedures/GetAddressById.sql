@@ -9,9 +9,11 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/28/2026
+-- Update date: 5/30/2026
 -- Description: Get Address By ID
--- EXEC dbo.GetAddressById 1
+--
+-- EXEC GetAddressById @AddressID = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.GetAddressById
@@ -38,7 +40,8 @@ BEGIN
             DateCreated,
             DateUpdated
         FROM dbo.Address
-        WHERE AddressID = @AddressID;
+        WHERE AddressID = @AddressID
+            AND IsActive = 1;
 
     END TRY
 

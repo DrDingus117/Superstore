@@ -9,9 +9,11 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/29/2026
+-- Update date: 5/30/2026
 -- Description: Get Order By ID
--- EXEC dbo.GetOrderById 1
+--
+-- EXEC GetOrderById @OrderID = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.GetOrderById
@@ -38,7 +40,8 @@ BEGIN
             DateCreated,
             DateUpdated
         FROM dbo.[Order]
-        WHERE OrderID = @OrderID;
+        WHERE OrderID = @OrderID
+            AND IsActive = 1;
 
     END TRY
 

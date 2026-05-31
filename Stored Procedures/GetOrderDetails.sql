@@ -9,9 +9,10 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/29/2026
+-- Update date: 5/30/2026
 -- Description: Get Order Details By Order ID
--- EXEC dbo.GetOrderDetails 1
+-- EXEC GetOrderDetails @OrderID = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.GetOrderDetails
@@ -23,12 +24,12 @@ BEGIN
     BEGIN TRY
 
         SELECT
-            OrderID,
-            ProductID,
-            OrderKey,
-            ProductKey
-        FROM dbo.OrderDetail
-        WHERE OrderID = @OrderID;
+            od.OrderID,
+            od.ProductID,
+            od.OrderKey,
+            od.ProductKey
+        FROM dbo.OrderDetail AS od
+        WHERE od.OrderID = @OrderID;
 
     END TRY
 

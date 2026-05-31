@@ -1,3 +1,4 @@
+USE [Superstore]
 GO
 
 SET ANSI_NULLS ON
@@ -8,7 +9,8 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/30/2026
+-- Update date: 5/30/2026
 -- Description: Get all Sub Categories
 -- EXEC dbo.GetSubCategories
 -- =============================================
@@ -18,21 +20,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    BEGIN TRY
-
-        SELECT
-            SubCategoryID,
-            SubCategory
-        FROM dbo.SubCategory
-        ORDER BY SubCategory;
-
-    END TRY
-
-    BEGIN CATCH
-
-        SELECT
-            ERROR_MESSAGE() AS ErrorMessage;
-
-    END CATCH
+    SELECT
+        SubCategoryID,
+        SubCategory
+    FROM dbo.SubCategory
+    ORDER BY SubCategory;
 END
 GO

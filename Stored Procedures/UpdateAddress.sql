@@ -1,4 +1,4 @@
-USE Superstore
+USE [Superstore]
 GO
 
 SET ANSI_NULLS ON
@@ -9,8 +9,23 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 4/23/2026
+-- Update date: 5/30/2026
 -- Description: Update Address
+--
+-- EXEC UpdateAddress
+--      @AddressID = 1,
+--      @AddressLine1 = '123 Main St',
+--      @AddressLine2 = 'Apt 4',
+--      @City = 'Anytown',
+--      @StateID = 1,
+--      @CountryID = 1,
+--      @PostalCode = 12345,
+--      @RegionID = 1,
+--      @AddressTypeID = 1,
+--      @CustomerID = 1,
+--      @CustomerKey = 'CUST-100',
+--      @IsActive = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.UpdateAddress
@@ -48,11 +63,15 @@ BEGIN
             DateUpdated = GETDATE()
         WHERE AddressID = @AddressID;
 
+        SELECT
+            'Address Updated Successfully' AS Message;
+
     END TRY
 
     BEGIN CATCH
 
-        SELECT ERROR_MESSAGE() AS ErrorMessage;
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
 
     END CATCH
 END

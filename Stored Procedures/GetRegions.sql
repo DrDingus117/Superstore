@@ -9,7 +9,8 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/30/2026
+-- Update date: 5/30/2026
 -- Description: Get all Regions
 -- EXEC dbo.GetRegions
 -- =============================================
@@ -19,21 +20,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    BEGIN TRY
-
-        SELECT
-            RegionID,
-            Region
-        FROM dbo.Region
-        ORDER BY Region;
-
-    END TRY
-
-    BEGIN CATCH
-
-        SELECT
-            ERROR_MESSAGE() AS ErrorMessage;
-
-    END CATCH
+    SELECT
+        RegionID,
+        Region
+    FROM dbo.Region
+    ORDER BY Region;
 END
 GO

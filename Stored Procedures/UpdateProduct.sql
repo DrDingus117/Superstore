@@ -1,16 +1,18 @@
 USE [Superstore]
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 5/29/2026 2:35:48 PM ******/
+
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 4/28/2026
+-- Update date: 5/30/2026
 -- Description: Update Product
---
+
 -- EXEC UpdateProduct
 --      @ProductID = 1,
 --      @ProductName = 'Updated Product',
@@ -21,39 +23,52 @@ GO
 --      @Inventory = 50
 -- =============================================
 
-ALTER PROCEDURE [dbo].[UpdateProduct]
-    @ProductID INT,
-    @ProductName NVARCHAR(100),
-    @CategoryID INT,
-    @SubCategoryID INT,
-    @UnitPrice DECIMAL(18,2),
-    @ProductKey NVARCHAR(50),
-    @Inventory INT
+CREATE OR ALTER PROCEDURE [dbo].[UpdateProduct]
+@ProductID INT,
+@ProductName NVARCHAR(100),
+@CategoryID INT,
+@SubCategoryID INT,
+@UnitPrice DECIMAL(18,2),
+@ProductKey NVARCHAR(50),
+@Inventory INT
 AS
 BEGIN
-    SET NOCOUNT ON;
+SET NOCOUNT ON;
 
-    BEGIN TRY
+```
+BEGIN TRY
 
-        UPDATE dbo.Product
-        SET
-            ProductName = @ProductName,
-            CategoryID = @CategoryID,
-            SubCategoryID = @SubCategoryID,
-            UnitPrice = @UnitPrice,
-            ProductKey = @ProductKey,
-            Inventory = @Inventory
-        WHERE ProductID = @ProductID;
+    UPDATE p
+    SET
+        p.ProductName = @ProductName,
+        p.CategoryID = @CategoryID,
+        p.SubCategoryID = @SubCategoryID,
+        p.UnitPrice = @UnitPrice,
+        p.ProductKey = @ProductKey,
+        p.Inventory = @Inventory
+    FROM dbo.Product AS p
+    WHERE p.ProductID = @ProductID;
 
+    IF @@ROWCOUNT > 0
+    BEGIN
         SELECT
             'Product Updated Successfully' AS Message;
-
-    END TRY
-
-    BEGIN CATCH
-
+    END
+    ELSE
+    BEGIN
         SELECT
-            ERROR_MESSAGE() AS ErrorMessage;
+            'Product Not Found' AS Message;
+    END
 
-    END CATCH
+END TRY
+
+BEGIN CATCH
+
+    SELECT
+        ERROR_MESSAGE() AS ErrorMessage;
+
+END CATCH
+```
+
 END
+GO

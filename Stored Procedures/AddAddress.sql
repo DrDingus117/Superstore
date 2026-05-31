@@ -9,8 +9,22 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/28/2026
+-- Update date: 5/30/2026
 -- Description: Add Address
+--
+-- EXEC AddAddress
+--      @AddressLine1 = '123 Main St',
+--      @AddressLine2 = 'Apt 4',
+--      @City = 'Anytown',
+--      @StateID = 1,
+--      @CountryID = 1,
+--      @PostalCode = 12345,
+--      @RegionID = 1,
+--      @AddressTypeID = 1,
+--      @CustomerID = 1,
+--      @CustomerKey = 'CUST-100',
+--      @IsActive = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.AddAddress
@@ -64,11 +78,15 @@ BEGIN
             GETDATE()
         );
 
+        SELECT
+            SCOPE_IDENTITY() AS NewAddressID;
+
     END TRY
 
     BEGIN CATCH
 
-        SELECT ERROR_MESSAGE() AS ErrorMessage;
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
 
     END CATCH
 END

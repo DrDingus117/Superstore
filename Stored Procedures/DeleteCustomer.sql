@@ -9,8 +9,10 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 4/16/2026
+-- Update date: 5/30/2026
 -- Description: Delete Customer
+-- EXEC DeleteCustomer @CustomerID = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.DeleteCustomer
@@ -21,15 +23,30 @@ BEGIN
 
     BEGIN TRY
 
-        DELETE
-        FROM dbo.Customer
-        WHERE CustomerID = @CustomerID;
+        UPDATE c
+        SET
+            c.IsActive = 0,
+            c.DateUpdated = GETDATE()
+        FROM dbo.Customer AS c
+        WHERE c.CustomerID = @CustomerID;
+
+        IF @@ROWCOUNT > 0
+        BEGIN
+            SELECT
+                'Customer Deleted Successfully' AS Message;
+        END
+        ELSE
+        BEGIN
+            SELECT
+                'Customer Not Found' AS Message;
+        END
 
     END TRY
 
     BEGIN CATCH
 
-        SELECT ERROR_MESSAGE() AS ErrorMessage;
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
 
     END CATCH
 END

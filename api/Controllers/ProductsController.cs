@@ -19,21 +19,19 @@ namespace api.Controllers
         [HttpGet]
         public IActionResult GetProducts()
         {
-            return Ok(_repository.GetProducts());
+            var products = _repository.GetProducts();
+            return Ok(products);
         }
 
         // GET: api/products/5
         [HttpGet("{id}")]
         public IActionResult GetProductById(int id)
         {
-            Product? product = _repository.GetProductById(id);
+            var product = _repository.GetProductById(id);
 
             if (product == null)
             {
-                return NotFound(new
-                {
-                    message = "Product not found"
-                });
+                return NotFound(new { message = "Product not found" });
             }
 
             return Ok(product);
@@ -41,8 +39,13 @@ namespace api.Controllers
 
         // POST: api/products
         [HttpPost]
-        public IActionResult AddProduct(Product product)
+        public IActionResult AddProduct([FromBody] Product product)
         {
+            if (product == null)
+            {
+                return BadRequest(new { message = "Product cannot be null" });
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -50,41 +53,34 @@ namespace api.Controllers
 
             try
             {
-                _repository.AddProduct(product);
+                var newId = _repository.AddProduct(product);
 
                 return CreatedAtAction(
                     nameof(GetProductById),
-                    new { id = product.ProductID },
+                    new { id = newId },
                     product
                 );
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = ex.Message
-                });
+                return StatusCode(500, new { message = ex.Message });
             }
         }
 
         // PUT: api/products/5
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(int id, Product product)
+        public IActionResult UpdateProduct(int id, [FromBody] Product product)
         {
-            if (!ModelState.IsValid)
+            if (product == null)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new { message = "Product cannot be null" });
             }
 
-            Product? existingProduct =
-                _repository.GetProductById(id);
+            var existingProduct = _repository.GetProductById(id);
 
             if (existingProduct == null)
             {
-                return NotFound(new
-                {
-                    message = "Product not found"
-                });
+                return NotFound(new { message = "Product not found" });
             }
 
             product.ProductID = id;
@@ -93,17 +89,11 @@ namespace api.Controllers
             {
                 _repository.UpdateProduct(product);
 
-                return Ok(new
-                {
-                    message = "Product updated successfully"
-                });
+                return Ok(new { message = "Product updated successfully" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = ex.Message
-                });
+                return StatusCode(500, new { message = ex.Message });
             }
         }
 
@@ -111,32 +101,22 @@ namespace api.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
         {
-            Product? existingProduct =
-                _repository.GetProductById(id);
+            var existingProduct = _repository.GetProductById(id);
 
             if (existingProduct == null)
             {
-                return NotFound(new
-                {
-                    message = "Product not found"
-                });
+                return NotFound(new { message = "Product not found" });
             }
 
             try
             {
                 _repository.DeleteProduct(id);
 
-                return Ok(new
-                {
-                    message = "Product deleted successfully"
-                });
+                return Ok(new { message = "Product deleted successfully" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = ex.Message
-                });
+                return StatusCode(500, new { message = ex.Message });
             }
         }
     }

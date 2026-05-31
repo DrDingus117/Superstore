@@ -9,7 +9,8 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/30/2026
+-- Update date: 5/30/2026
 -- Description: Get all Segments
 -- EXEC dbo.GetSegments
 -- =============================================
@@ -19,21 +20,10 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    BEGIN TRY
-
-        SELECT
-            SegmentID,
-            Segment
-        FROM dbo.Segment
-        ORDER BY Segment;
-
-    END TRY
-
-    BEGIN CATCH
-
-        SELECT
-            ERROR_MESSAGE() AS ErrorMessage;
-
-    END CATCH
+    SELECT
+        SegmentID,
+        Segment
+    FROM dbo.Segment
+    ORDER BY Segment;
 END
 GO

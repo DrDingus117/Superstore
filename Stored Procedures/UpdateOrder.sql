@@ -9,8 +9,23 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/29/2026
+-- Update date: 5/30/2026
 -- Description: Update Order
+--
+-- EXEC UpdateOrder
+--      @OrderID = 1,
+--      @OrderDate = GETDATE(),
+--      @CustomerID = 1,
+--      @SalesPrice = 100.00,
+--      @Quantity = 2,
+--      @Discount = 5.00,
+--      @Profit = 20.00,
+--      @ShipModeID = 1,
+--      @ShipDate = GETDATE(),
+--      @OrderKey = 'ORD-100',
+--      @CustomerKey = 'CUST-100',
+--      @IsActive = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.UpdateOrder
@@ -48,11 +63,15 @@ BEGIN
             DateUpdated = GETDATE()
         WHERE OrderID = @OrderID;
 
+        SELECT
+            'Order Updated Successfully' AS Message;
+
     END TRY
 
     BEGIN CATCH
 
-        SELECT ERROR_MESSAGE() AS ErrorMessage;
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
 
     END CATCH
 END

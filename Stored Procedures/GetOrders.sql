@@ -9,9 +9,11 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/28/2026
+-- Update date: 5/30/2026
 -- Description: Get all Orders
--- EXEC dbo.GetOrders
+--
+-- EXEC GetOrders
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.GetOrders
@@ -37,6 +39,7 @@ BEGIN
             DateCreated,
             DateUpdated
         FROM dbo.[Order]
+        WHERE IsActive = 1
         ORDER BY OrderDate DESC;
 
     END TRY

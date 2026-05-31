@@ -9,8 +9,22 @@ GO
 
 -- =============================================
 -- Author:      Marcus Pendleton
--- Create date: 5/7/2026
+-- Create date: 5/30/2026
+-- Update date: 5/30/2026
 -- Description: Add Order
+--
+-- EXEC AddOrder
+--      @OrderDate = GETDATE(),
+--      @CustomerID = 1,
+--      @SalesPrice = 100.00,
+--      @Quantity = 2,
+--      @Discount = 5.00,
+--      @Profit = 20.00,
+--      @ShipModeID = 1,
+--      @ShipDate = GETDATE(),
+--      @OrderKey = 'ORD-100',
+--      @CustomerKey = 'CUST-100',
+--      @IsActive = 1
 -- =============================================
 
 CREATE OR ALTER PROCEDURE dbo.AddOrder
@@ -64,11 +78,15 @@ BEGIN
             GETDATE()
         );
 
+        SELECT
+            SCOPE_IDENTITY() AS NewOrderID;
+
     END TRY
 
     BEGIN CATCH
 
-        SELECT ERROR_MESSAGE() AS ErrorMessage;
+        SELECT
+            ERROR_MESSAGE() AS ErrorMessage;
 
     END CATCH
 END

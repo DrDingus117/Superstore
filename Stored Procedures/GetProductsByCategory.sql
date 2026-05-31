@@ -10,6 +10,7 @@ GO
 -- =============================================
 -- Author:      Marcus Pendleton
 -- Create date: 5/7/2026
+-- Update date: 5/30/2026
 -- Description: Get Products By Category
 --
 -- EXEC GetProductsByCategory @CategoryID = 1
