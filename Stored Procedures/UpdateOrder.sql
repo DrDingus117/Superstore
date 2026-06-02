@@ -28,7 +28,7 @@ GO
 --      @IsActive = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.UpdateOrder
+CREATE PROCEDURE dbo.UpdateOrder
     @OrderID INT,
     @OrderDate DATETIME,
     @CustomerID INT,

@@ -15,7 +15,7 @@ GO
 -- EXEC dbo.GetSegments
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetSegments
+CREATE PROCEDURE dbo.GetSegments
 AS
 BEGIN
     SET NOCOUNT ON;

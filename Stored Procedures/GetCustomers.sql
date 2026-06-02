@@ -16,7 +16,7 @@ GO
 -- =============================================
 
 
-CREATE OR ALTER PROCEDURE dbo.GetCustomers
+CREATE PROCEDURE dbo.GetCustomers
 AS
 BEGIN
     SET NOCOUNT ON;

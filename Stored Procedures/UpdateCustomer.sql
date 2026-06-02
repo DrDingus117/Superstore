@@ -22,7 +22,7 @@ GO
 --      @IsActive = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.UpdateCustomer
+CREATE PROCEDURE dbo.UpdateCustomer
     @CustomerID INT,
     @FirstName NVARCHAR(50),
     @LastName NVARCHAR(50),

@@ -15,7 +15,7 @@ GO
 -- EXEC dbo.GetRegions
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetRegions
+CREATE PROCEDURE dbo.GetRegions
 AS
 BEGIN
     SET NOCOUNT ON;

@@ -16,7 +16,7 @@ GO
 -- EXEC GetOrders
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetOrders
+CREATE PROCEDURE dbo.GetOrders
 AS
 BEGIN
     SET NOCOUNT ON;

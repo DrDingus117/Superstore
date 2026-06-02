@@ -16,7 +16,7 @@ GO
 -- EXEC GetAddressTypes
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetAddressTypes
+CREATE PROCEDURE dbo.GetAddressTypes
 AS
 BEGIN
     SET NOCOUNT ON;

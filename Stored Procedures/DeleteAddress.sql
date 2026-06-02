@@ -16,7 +16,7 @@ GO
 -- EXEC DeleteAddress @AddressID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.DeleteAddress
+CREATE PROCEDURE dbo.DeleteAddress
     @AddressID INT
 AS
 BEGIN

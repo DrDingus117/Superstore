@@ -15,7 +15,7 @@ GO
 -- EXEC dbo.GetCountries
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCountries
+CREATE PROCEDURE dbo.GetCountries
 AS
 BEGIN
     SET NOCOUNT ON;

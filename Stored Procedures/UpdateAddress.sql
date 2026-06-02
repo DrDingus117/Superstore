@@ -28,7 +28,7 @@ GO
 --      @IsActive = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.UpdateAddress
+CREATE PROCEDURE dbo.UpdateAddress
     @AddressID INT,
     @AddressLine1 NVARCHAR(100),
     @AddressLine2 NVARCHAR(100),

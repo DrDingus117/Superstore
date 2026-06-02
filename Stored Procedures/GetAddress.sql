@@ -16,7 +16,7 @@ GO
 -- EXEC GetAddress @AddressID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetAddress
+CREATE PROCEDURE dbo.GetAddress
     @AddressID INT
 AS
 BEGIN

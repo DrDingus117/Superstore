@@ -15,7 +15,7 @@ GO
 -- EXEC GetOrderDetails @OrderID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetOrderDetails
+CREATE PROCEDURE dbo.GetOrderDetails
     @OrderID INT
 AS
 BEGIN

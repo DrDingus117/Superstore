@@ -16,7 +16,7 @@ GO
 -- EXEC DeleteProduct @ProductID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE [dbo].[DeleteProduct]
+CREATE PROCEDURE [dbo].[DeleteProduct]
     @ProductID INT
 AS
 BEGIN

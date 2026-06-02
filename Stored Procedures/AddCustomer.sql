@@ -21,7 +21,7 @@ GO
 --      @IsActive = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.AddCustomer
+CREATE PROCEDURE dbo.AddCustomer
     @FirstName NVARCHAR(50),
     @LastName NVARCHAR(50),
     @SegmentID INT,

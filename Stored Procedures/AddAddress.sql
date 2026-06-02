@@ -27,7 +27,7 @@ GO
 --      @IsActive = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.AddAddress
+CREATE PROCEDURE dbo.AddAddress
     @AddressLine1 NVARCHAR(100),
     @AddressLine2 NVARCHAR(100),
     @City NVARCHAR(50),

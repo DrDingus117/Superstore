@@ -16,7 +16,7 @@ GO
 -- EXEC DeleteOrder @OrderID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.DeleteOrder
+CREATE PROCEDURE dbo.DeleteOrder
     @OrderID INT
 AS
 BEGIN

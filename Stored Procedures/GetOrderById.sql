@@ -16,7 +16,7 @@ GO
 -- EXEC GetOrderById @OrderID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetOrderById
+CREATE PROCEDURE dbo.GetOrderById
     @OrderID INT
 AS
 BEGIN

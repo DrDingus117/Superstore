@@ -16,7 +16,7 @@ GO
 -- EXEC GetProductsByCategory @CategoryID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE [dbo].[GetProductsByCategory]
+CREATE PROCEDURE [dbo].[GetProductsByCategory]
     @CategoryID INT
 AS
 BEGIN

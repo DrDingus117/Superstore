@@ -15,7 +15,7 @@ GO
 -- EXEC DeleteCustomer @CustomerID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.DeleteCustomer
+CREATE PROCEDURE dbo.DeleteCustomer
     @CustomerID INT
 AS
 BEGIN

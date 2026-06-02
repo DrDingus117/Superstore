@@ -15,7 +15,7 @@ GO
 -- EXEC GetCustomerById @CustomerID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCustomerById
+CREATE PROCEDURE dbo.GetCustomerById
     @CustomerID INT
 AS
 BEGIN

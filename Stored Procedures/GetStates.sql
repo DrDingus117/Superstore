@@ -15,7 +15,7 @@ GO
 -- EXEC dbo.GetStates
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetStates
+CREATE PROCEDURE dbo.GetStates
 AS
 BEGIN
     SET NOCOUNT ON;

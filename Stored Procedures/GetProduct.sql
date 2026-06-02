@@ -16,7 +16,7 @@ GO
 -- EXEC GetProduct @ProductID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE [dbo].[GetProduct]
+CREATE PROCEDURE [dbo].[GetProduct]
     @ProductID INT
 AS
 BEGIN

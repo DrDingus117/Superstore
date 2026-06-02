@@ -15,7 +15,7 @@ GO
 -- EXEC dbo.GetCategories
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCategories
+CREATE PROCEDURE dbo.GetCategories
 AS
 BEGIN
     SET NOCOUNT ON;

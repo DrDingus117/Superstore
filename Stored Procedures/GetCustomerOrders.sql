@@ -16,7 +16,7 @@ GO
 -- EXEC GetCustomerOrders @CustomerID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetCustomerOrders
+CREATE PROCEDURE dbo.GetCustomerOrders
     @CustomerID INT
 AS
 BEGIN

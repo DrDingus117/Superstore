@@ -15,7 +15,7 @@ GO
 -- EXEC dbo.GetShipModes
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetShipModes
+CREATE PROCEDURE dbo.GetShipModes
 AS
 BEGIN
     SET NOCOUNT ON;

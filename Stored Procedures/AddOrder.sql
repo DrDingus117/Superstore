@@ -27,7 +27,7 @@ GO
 --      @IsActive = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.AddOrder
+CREATE PROCEDURE dbo.AddOrder
     @OrderDate DATETIME,
     @CustomerID INT,
     @SalesPrice DECIMAL(18,2),

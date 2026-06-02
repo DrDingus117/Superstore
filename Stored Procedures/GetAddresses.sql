@@ -16,7 +16,7 @@ GO
 -- EXEC GetAddresses
 -- =============================================
 
-CREATE OR ALTER PROCEDURE dbo.GetAddresses
+CREATE PROCEDURE dbo.GetAddresses
 AS
 BEGIN
     SET NOCOUNT ON;

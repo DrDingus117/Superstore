@@ -16,7 +16,7 @@ GO
 -- EXEC GetProductsBySubCategory @SubCategoryID = 1
 -- =============================================
 
-CREATE OR ALTER PROCEDURE [dbo].[GetProductsBySubCategory]
+CREATE PROCEDURE [dbo].[GetProductsBySubCategory]
     @SubCategoryID INT
 AS
 BEGIN

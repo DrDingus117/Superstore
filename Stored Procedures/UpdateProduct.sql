@@ -23,7 +23,7 @@ GO
 --      @Inventory = 50
 -- =============================================
 
-CREATE OR ALTER PROCEDURE [dbo].[UpdateProduct]
+CREATE PROCEDURE [dbo].[UpdateProduct]
 @ProductID INT,
 @ProductName NVARCHAR(100),
 @CategoryID INT,
