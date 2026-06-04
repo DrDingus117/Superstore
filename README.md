@@ -14,7 +14,7 @@
 
 ### Add Product
 
-* Enter the product name.
+* Enter the product name (for example, `Halo 3`).
 * Enter a Category ID:
 
   * `1` = Furniture
@@ -23,7 +23,7 @@
 * Enter a SubCategory ID between `1` and `3`.
 * Enter a price (for example, `2999.99`).
 * Enter the inventory quantity.
-* Enter a Product Key (for example, `Cat-Toy`).
+* Enter a Product Key (for example, `343-GS-HALO3`).
 
 ### Edit Product
 
