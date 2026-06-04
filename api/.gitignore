@@ -81,3 +81,4 @@ secrets.json
 *.usersecret
 appsettings.Local.json
 appsettings.Development.json
+appsettings.Production.json
