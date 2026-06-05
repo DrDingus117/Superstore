@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5014";
+const BASE_URL = "http://api.local/api";
 
 async function handleResponse(res) {
   if (!res.ok) {
